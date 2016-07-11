@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">The Decider</string>
+    <string name="title_activity_plinko">Plinko</string>
+    <string name="title_activity_roulette">Roulette</string>
+</resources>
