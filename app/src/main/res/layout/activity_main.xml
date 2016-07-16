@@ -27,18 +27,37 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button2"
-        android:layout_above="@+id/button3"
+        android:text="Roulette"
+        android:id="@+id/rouletteButton"
+        android:layout_above="@+id/plinkoButton"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="56dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button3"
+        android:text="Plinko"
+        android:id="@+id/plinkoButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="73dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/decisionsSpinner"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/textView10"
+        android:layout_toLeftOf="@+id/addDecisionButton"
+        android:layout_toStartOf="@+id/addDecisionButton" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New"
+        android:id="@+id/addDecisionButton"
+        android:layout_alignTop="@+id/decisionsSpinner"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

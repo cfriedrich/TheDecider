@@ -110,6 +110,30 @@ public class TheDeciderDB {
             cursor.close();
     }
 
+
+    public Decision getDecisionByName(String name)
+    {
+        openReadableDB();
+
+        String[] whereArgs = new String[]{
+                name
+        };
+        String queryString = "SELECT * FROM " + DECISIONS_TABLE + " WHERE " + DECISION_DESCRIPTION + " = ?;";
+        Cursor cursor = db.rawQuery(queryString, whereArgs);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            Decision decision = new Decision();
+            decision.setDecisionID(cursor.getInt(DECISION_ID_COL));
+            decision.setDescription(cursor.getString(DECISION_DESCRIPTION_COL));
+            decision.setNumChoices(cursor.getInt(DECISION_NUMCHOICES_COL));
+            closeCursor(cursor);
+            closeDB();
+            return decision;
+        }
+        return null;
+    }
+
+
     // Get all Decisions
     public ArrayList<Decision> getDecisions() {
         ArrayList<Decision> decisions = new ArrayList<Decision>();
@@ -128,7 +152,7 @@ public class TheDeciderDB {
         return decisions;
     }
 
-    public ArrayList<Choice> getChoices(int decisionID) {
+    public ArrayList<Choice> getChoicesByDecisionID(int decisionID) {
         ArrayList<Choice> choices = new ArrayList<Choice>();
         openReadableDB();
         String[] whereArgs = new String[]{
@@ -151,23 +175,22 @@ public class TheDeciderDB {
         return choices;
     }
 
-    public ArrayList<Decision> getDecisions() {
-        ArrayList<Decision> decisions = new ArrayList<Decision>();
+    public ArrayList<Choice> getDecisionChoices(int decisionID) {
+        ArrayList<Choice> choices = new ArrayList<Choice>();
         openReadableDB();
         String queryString = "SELECT * " +
-                "FROM " + DECISIONS_TABLE + ";"
+                "FROM " + CHOICES_TABLE + " WHERE " + CHOICE_DECISION_ID + " = '" + String.valueOf(decisionID) + "';";
         Cursor cursor = db.rawQuery(queryString, null);
         while (cursor.moveToNext()) {
-            Decision decision = new Decision();
-            decision.setDecisionID(cursor.getInt(DECISION_ID_COL));
-            decision.setNumChoices(cursor.getInt(DECISION_NUMCHOICES_COL));
-            decision.setDescription(cursor.getString(DECISION_DESCRIPTION_COL));
-
-            decisions.add(decision);
+            Choice choice = new Choice();
+            choice.setChoiceID(cursor.getInt(CHOICE_ID_COL));
+            choice.setDecisionID(cursor.getInt(CHOICE_DECISION_ID_COL));
+            choice.setDescription(cursor.getString(CHOICE_DESCRIPTION_COL));
+            choices.add(choice);
         }
         closeCursor(cursor);
         closeDB();
 
-        return decisions;
+        return choices;
     }
 }
